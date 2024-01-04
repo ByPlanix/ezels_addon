@@ -1,6 +1,7 @@
+local locked = false
+
 Citizen.CreateThread(function()
     while true do
-        local locked = false
         local ped = GetPlayerPed(-1)
         if IsPedInAnyVehicle(ped, false) then
             local vehicle = GetVehiclePedIsIn(ped, false)
@@ -10,8 +11,10 @@ Citizen.CreateThread(function()
                 LocalPlayer.state.invHotkeys = false
             end
         else
-            locked = false
-            LocalPlayer.state.invHotkeys = true
+            if locked == true then
+                locked = false
+                LocalPlayer.state.invHotkeys = true
+            end
         end
         Wait(1000)
     end
